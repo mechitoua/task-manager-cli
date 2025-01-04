@@ -1,5 +1,3 @@
-
-
 ## 1. Set Up the Project
 
 - Create a new directory for the project: `mkdir task-tracker-cli`
@@ -58,4 +56,5 @@
 - Monitor the application for performance issues and bugs.
 - Address any issues that are reported by users.
 - Consider adding new features or enhancements to the application, such as the ability to filter tasks by date, set due dates, or assign tasks to users.
+
 ---
