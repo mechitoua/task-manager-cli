@@ -1,47 +1,24 @@
-/*
-Given a string s, find the length of the longest
-substring
-without repeating characters.
+import { displayMenu, listTasks, readInput } from './services.ts'
 
-Example 1:
+displayMenu()
+let option: number | null = await readInput()
 
-Input: s = "abcabcbb"
-Output: 3
-Explanation: The answer is "abc", with the length of 3.
-
-Example 2:
-
-Input: s = "bbbbb"
-Output: 1
-Explanation: The answer is "b", with the length of 1.
-
-Example 3:
-
-Input: s = "pwwkew"
-Output: 3
-Explanation: The answer is "wke", with the length of 3.
-Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
-
-Constraints:
-
-    0 <= s.length <= 5 * 104
-    s consists of English letters, digits, symbols and spaces.
-*/
-function lengthOfLongestSubstring(s: string): number {
-  let maxLength = 0;
-  const charIndexMap = new Map<string, number>();
-  let start = 0;
-  for (let end = 0; end < s.length; end++) {
-    const char = s[end];
-    if (charIndexMap.has(char) && charIndexMap.get(char)! >= start) {
-      start = charIndexMap.get(char)! + 1;
+while (option !== 6) {
+  switch (option) {
+    case 1: {
+      await listTasks() // Display tasks
+      break
     }
-    charIndexMap.set(char, end);
-    maxLength = Math.max(maxLength, end - start + 1);
+    // Other cases...
+    case 6: {
+      console.log('Goodbye, Hope to see you again')
+      break
+    }
+    default: {
+      console.log('Invalid option, try again')
+    }
   }
-  return maxLength;
+  // Get new option from user
+  displayMenu()
+  option = await readInput() // Ensure you're getting new input
 }
-
-console.log(lengthOfLongestSubstring('abcabcbb'));
-console.log(lengthOfLongestSubstring('bbbbb'));
-console.log(lengthOfLongestSubstring('pwwkew'));
