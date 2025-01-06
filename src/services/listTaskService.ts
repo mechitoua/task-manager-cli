@@ -1,14 +1,12 @@
-import { parseJsonFile } from '../utils.ts'
+import { getTasks } from '../utils.ts'
 
 export async function listTasks() {
-  const parsedData = await parseJsonFile('./tasks.json') // Assuming this returns the full object
-  const parsedTasks = parsedData.tasks
-
-  if (Array.isArray(parsedTasks)) {
+  const tasks = await getTasks()
+  if (Array.isArray(tasks)) {
     console.log('====================================')
     console.log('              Task List             ')
     console.log('====================================')
-    parsedTasks.forEach((task) => {
+    tasks.forEach((task) => {
       console.log(`Id: ${task.id}`)
       console.log(`Description: ${task.description}`)
       console.log(`Status: ${task.status}`)
@@ -17,6 +15,6 @@ export async function listTasks() {
       console.log('------------------------------------')
     })
   } else {
-    console.error('Parsed tasks is not an array:', parsedTasks)
+    console.error('Parsed tasks is not an array:', tasks)
   }
 }

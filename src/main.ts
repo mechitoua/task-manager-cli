@@ -1,3 +1,4 @@
+import { addTask } from './services/addTaskService.ts'
 import { listTasks } from './services/listTaskService.ts'
 import { displayMenu, readInput } from './utils.ts'
 
@@ -11,11 +12,11 @@ while (option !== 6) {
       break
     }
     case 2: {
-      console.log('Add a task')
+      await addTask()
       break
     }
     case 3: {
-      console.log('Update a task')
+      readInput()
       break
     }
     case 4: {
