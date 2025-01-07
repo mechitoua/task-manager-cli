@@ -1,7 +1,14 @@
 import { addTask } from './services/addTask.ts'
 import { deleteTask } from './services/deleteTask.ts'
 import { listTasks } from './services/listTasks.ts'
+import { updateTask } from './services/updateTask.ts'
 import { displayMenu, readInput } from './utils.ts'
+// check if 'tasks.json' exists if not create it when the app starts
+try {
+  await Deno.stat('./tasks.json')
+} catch {
+  await Deno.writeTextFile('./tasks.json', JSON.stringify({ tasks: [] }))
+}
 
 displayMenu()
 let option: number | null = await readInput()
@@ -17,7 +24,7 @@ while (option !== 6) {
       break
     }
     case 3: {
-      console.log('update a task')
+      await updateTask()
       break
     }
     case 4: {

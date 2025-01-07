@@ -2,6 +2,11 @@ import { getTasks } from '../utils.ts'
 
 export async function listTasks() {
   const tasks = await getTasks()
+  // check if the tasks array is empty and if it is, log a message
+  if (tasks.length === 0) {
+    console.log('No tasks found, try adding some tasks')
+  }
+  // if the tasks array is not empty, log each task
   if (Array.isArray(tasks)) {
     console.log('====================================')
     console.log('              Task List             ')

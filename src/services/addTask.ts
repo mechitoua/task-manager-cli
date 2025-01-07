@@ -6,7 +6,7 @@ export async function addTask() {
   if (Array.isArray(tasks)) {
     const newTask: Task = {
       ...task,
-      id: tasks.length + 1
+      id: tasks.length > 0 ? Math.max(...tasks.map((t) => t.id)) + 1 : 1
     }
     tasks.push(newTask)
     await Deno.writeTextFile('./tasks.json', JSON.stringify({ tasks }))
