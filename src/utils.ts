@@ -2,8 +2,8 @@ export interface Task {
   id: number;
   description: string;
   status: TaskStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export enum TaskStatus {
@@ -34,8 +34,8 @@ export async function getTasks() {
 export async function generateTaskFromInput(): Promise<Task> {
   const description = await getTaskDescriptionFromUser();
   const status = await getTaskStatusFromUser();
-  const createdAt = new Date();
-  const updatedAt = new Date();
+  const createdAt = new Date().toLocaleString();
+  const updatedAt = new Date().toLocaleString();
   // make sure the id of the task start from one
   return { id: 1, description, status, createdAt, updatedAt };
 }
