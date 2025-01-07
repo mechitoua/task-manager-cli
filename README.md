@@ -1,44 +1,42 @@
-# Task Tracker CLI Application Requirements
+![](./public/task-manager.png)
+# CLI Task Manager
 
-## Overview
+A simple command-line interface (CLI) application for managing tasks. It allows you to add, delete, update, and list tasks, as well as mark a task as "in progress" or "done". Tasks are stored in a JSON file for persistence.
 
-Develop a command line application (CLI) that manages tasks. The application should accept user actions and inputs as arguments, and store tasks in a JSON file.
+## Functionality
 
-## Functional Requirements
+* Add a new task with a description and status
+* Delete an existing task by ID
+* Update an existing task by ID
+* List all tasks
+* Mark a task as "in progress" or "done"
+* Tasks are stored in a JSON file for persistence
 
-- Add, update, and delete tasks
-- Mark tasks as 'in progress' or 'done'
-- List all tasks
-- List tasks based on their status (done, todo, in progress)
+## Use Cases
 
-## Technical Requirements
+* Use it to keep track of your personal tasks and to-do lists
+* Use it to manage tasks for a team project or a group assignment
+* Use it to organize your daily tasks and prioritize them based on their status
 
-- Use any programming language
-- Accept user inputs as positional arguments in the command line
-- Store tasks in a JSON file in the current directory
-- Create the JSON file if it does not exist
-- Use the native file system module of the programming language to interact with the JSON file
-- Do not use external libraries or frameworks
-- Handle errors and edge cases gracefully
+## Installation
 
-## Task Properties
+* Clone the repository
+* Install Deno if you haven't already (https://deno.land/)
+* Run `deno install -A -f --unstable -n task-manager main.ts` to install the CLI globally
+* Run `task-manager` to start using the CLI
 
-Each task should have the following properties:
+## Usage
 
-- `id`: Unique identifier
-- `description`: Short task description
-- `status`: Task status (todo, in progress, done)
-- `createdAt`: Date and time of creation
-- `updatedAt`: Date and time of last update
+* Run `task-manager` to start the CLI
+* Follow the prompts to perform the desired task (add, delete, update, list, mark as "in progress" or "done")
+* Tasks are stored in a JSON file (tasks.json) for persistence
 
-## Usage Examples
+## Contributing
 
-- Add a new task: `task-cli add "Buy groceries"`
-- Update a task: `task-cli update 1 "Buy groceries and cook dinner"`
-- Delete a task: `task-cli delete 1`
-- Mark a task as in progress: `task-cli mark-in-progress 1`
-- Mark a task as done: `task-cli mark-done 1`
-- List all tasks: `task-cli list`
-- List tasks by status: `task-cli list done`, `task-cli list todo`, `task-cli list in-progress`
+Contributions are welcome! If you find a bug or have a feature request, please open an issue. If you would like to contribute code, please open a pull request.
+
+## License
+
+This project is licensed under the MIT License.
 
 ---
