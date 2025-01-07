@@ -1,5 +1,6 @@
-import { addTask } from './services/addTaskService.ts'
-import { listTasks } from './services/listTaskService.ts'
+import { addTask } from './services/addTask.ts'
+import { deleteTask } from './services/deleteTask.ts'
+import { listTasks } from './services/listTasks.ts'
 import { displayMenu, readInput } from './utils.ts'
 
 displayMenu()
@@ -16,11 +17,11 @@ while (option !== 6) {
       break
     }
     case 3: {
-      readInput()
+      console.log('update a task')
       break
     }
     case 4: {
-      console.log('Delete a task')
+      await deleteTask()
       break
     }
     case 5: {

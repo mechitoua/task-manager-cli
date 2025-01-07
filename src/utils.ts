@@ -76,10 +76,13 @@ export async function getTaskStatusFromUser(): Promise<TaskStatus> {
   if (status === null) {
     throw new Error('Task status cannot be null')
   }
-  if (!Object.values(TaskStatus).includes(status)) {
-    throw new Error('Invalid task status, must be one of: ' + Object.values(TaskStatus))
+  const validStatus = Object.values(TaskStatus).find((s) => s === status)
+  if (!validStatus) {
+    throw new Error(
+      'Invalid task status, must be one of: ' + Object.values(TaskStatus).join(', ')
+    )
   }
-  return status as TaskStatus
+  return validStatus as TaskStatus
 }
 
 export async function promptUser(prompt: string): Promise<string | null> {
