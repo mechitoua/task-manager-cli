@@ -3,9 +3,16 @@
     {
       "id": 1,
       "description": "Learn typescript",
-      "status": "todo",
+      "status": "in-progress",
       "createdAt": "2025-01-08T17:41:49.783Z",
-      "updatedAt": "2025-01-08T17:41:49.790Z"
+      "updatedAt": "1/8/2025, 6:52:45 PM"
+    },
+    {
+      "id": 2,
+      "description": "Learn DSA & practice LeetCode problems",
+      "status": "done",
+      "createdAt": "2025-01-08T17:45:07.159Z",
+      "updatedAt": "1/8/2025, 6:53:10 PM"
     }
   ]
 }

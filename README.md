@@ -2,18 +2,16 @@
 
 # CLI Task Manager
 
-A simple command-line interface (CLI) application for managing tasks. It allows
-you to add, delete, update, and list tasks, as well as mark a task as "in
-progress" or "done". Tasks are stored in a JSON file for persistence.
+A command-line task management tool that helps you organize and track your tasks. It provides straightforward commands for adding, removing, updating, and listing tasks, with support for different task statuses. All tasks are automatically saved to a JSON file for data persistence.
 
-## Functionality
+## Features
 
-- Add a new task with a description and status
-- Delete an existing task by ID
-- Update an existing task by ID
-- List all tasks
-- Mark a task as "in progress" or "done"
-- Tasks are stored in a JSON file for persistence
+- Create new tasks with descriptions (automatically set to "todo" status)
+- Remove tasks using their ID
+- Update task descriptions and statuses
+- List all tasks with their current status
+- Filter tasks by status (todo, in-progress, done)
+- Automatic saving to a JSON file
 
 ## Use Cases
 
@@ -23,18 +21,45 @@ progress" or "done". Tasks are stored in a JSON file for persistence.
 
 ## Installation
 
-- Clone the repository
-- Install Deno if you haven't already (https://deno.land/)
-- Run `deno install -A -f --unstable -n task-manager main.ts` to install the CLI
-  globally
-- Run `task-manager` to start using the CLI
+1. Make sure you have [Deno](https://deno.land/) installed
+2. Install the CLI globally using:
+
+```bash
+deno install -A -f -n task-cli src/main.ts
+```
+
+3. The `task-cli` command will now be available in your terminal
 
 ## Usage
 
-- Run `task-manager` to start the CLI
-- Follow the prompts to perform the desired task (add, delete, update, list,
-  mark as "in progress" or "done")
-- Tasks are stored in a JSON file (tasks.json) for persistence
+### Add a new task
+
+New tasks are automatically created with a "todo" status. The status cannot be set during creation.
+
+```bash
+task-cli add "Task description"
+```
+
+### List all tasks
+
+```bash
+task-cli list
+task-cli list --status=in-progress
+```
+
+### Update a task
+
+```bash
+task-cli update <task-id> "New description"
+```
+
+### Remove a task
+
+```bash
+task-cli remove <task-id>
+```
+
+All changes are automatically saved to the tasks.json file.
 
 ## Contributing
 
