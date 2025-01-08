@@ -1,9 +1,10 @@
 ![](./public/task-manager.png)
 
 # CLI Task Manager
-
 A command-line task management tool that helps you organize and track your tasks. It provides straightforward commands for adding, removing, updating, and listing tasks, with support for different task statuses. All tasks are automatically saved to a JSON file for data persistence.
 
+## Link to Challenge
+[roadmap.sh challenge](https://roadmap.sh/projects/task-tracker)
 ## Features
 
 - Create new tasks with descriptions (automatically set to "todo" status)
