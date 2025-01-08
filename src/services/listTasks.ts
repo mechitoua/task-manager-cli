@@ -18,7 +18,7 @@ try {
     return colors.red('Invalid date')
 }
 }
-export async function listTasks(status: TaskStatus) {
+export async function listTasks(status: TaskStatus | null) {
   try {
     const tasks = await getTasks()
     if (!Array.isArray(tasks)) {
@@ -53,12 +53,12 @@ export async function listTasks(status: TaskStatus) {
 
     // Print tasks
     filteredTasks.forEach((task) => {
-      const statusColor =
-        task.status === 'done'
-          ? colors.green
-          : task.status === 'in-progress'
-          ? colors.yellow
-          : colors.red
+    const statusColor =
+    task.status === TaskStatus.DONE
+        ? colors.green
+        : task.status === TaskStatus.IN_PROGRESS
+        ? colors.yellow
+        : colors.red
 
       console.log(
         ` ${colors.bold(String(task.id).padEnd(4))} | ` +

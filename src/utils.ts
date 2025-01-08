@@ -45,8 +45,11 @@ export async function getTasks(): Promise<Task[]> {
   }
 }
 
-export function isValidTaskStatus(status: string): status is TaskStatus {
-  return Object.values(TaskStatus).includes(status as TaskStatus)
+export function isValidTaskStatus(status: string | null): status is TaskStatus {
+if (status === null) {
+return false
+}
+return Object.values(TaskStatus).includes(status as TaskStatus)
 }
 
 export function validateTaskId(id: unknown): number {
@@ -57,10 +60,24 @@ export function validateTaskId(id: unknown): number {
 }
 
 export function validateTaskDescription(description: unknown): string {
-  if (typeof description !== 'string' || description.trim().length === 0) {
-    throw new Error('Task description must be a non-empty string')
-  }
-  return description.trim()
+if (typeof description !== 'string') {
+    throw new Error('Task description must be a string')
+}
+
+const trimmed = description.trim()
+if (trimmed.length === 0) {
+    throw new Error('Task description cannot be empty')
+}
+
+if (trimmed.length < 3) {
+    throw new Error('Task description must be at least 3 characters long')
+}
+
+if (trimmed.length > 500) {
+    throw new Error('Task description cannot exceed 500 characters')
+}
+
+return trimmed
 }
 
 export function createTask(description: string, id: number): Task {

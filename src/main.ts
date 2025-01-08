@@ -8,8 +8,10 @@ import { TaskStatus } from './utils.ts'
 function isValidTaskStatus(
   status: string | undefined | null
 ): status is TaskStatus | null {
-  if (status === undefined || status === null) return true
-  return ['done', 'todo', 'in-progress'].includes(status)
+if (status === undefined || status === null) return true
+return status === TaskStatus.DONE || 
+    status === TaskStatus.TODO || 
+    status === TaskStatus.IN_PROGRESS
 }
 // check if 'tasks.json' exists if not create it when the app starts
 try {
@@ -82,17 +84,29 @@ try {
       break
     }
     case 'list': {
-      const status = args[1] || null
-      if (!isValidTaskStatus(status)) {
-        throw new Error(
-          'Invalid status. Use: done, todo, in-progress, or omit for all tasks'
-        )
-      }
-      if (status === null) {
-        throw new Error('Status must be one of: done, todo, in-progress')
-      }
-      await listTasks(status)
-      break
+    const statusArg = args[1]
+    let status: TaskStatus | null = null
+    
+    if (statusArg) {
+        switch (statusArg) {
+        case 'done':
+            status = TaskStatus.DONE
+            break
+        case 'todo':
+            status = TaskStatus.TODO
+            break
+        case 'in-progress':
+            status = TaskStatus.IN_PROGRESS
+            break
+        default:
+            throw new Error(
+            'Invalid status. Use: done, todo, in-progress, or omit for all tasks'
+            )
+        }
+    }
+    
+    await listTasks(status)
+    break
     }
     default: {
       printUsage()

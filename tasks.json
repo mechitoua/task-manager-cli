@@ -10,9 +10,16 @@
     {
       "id": 2,
       "description": "Learn DSA & practice LeetCode problems",
-      "status": "done",
+      "status": "in-progress",
       "createdAt": "2025-01-08T17:45:07.159Z",
-      "updatedAt": "1/8/2025, 6:53:10 PM"
+      "updatedAt": "1/8/2025, 8:30:38 PM"
+    },
+    {
+      "id": 3,
+      "description": "Learning Vue.js for frontend side projects",
+      "status": "todo",
+      "createdAt": "2025-01-08T19:22:47.165Z",
+      "updatedAt": "2025-01-08T19:22:47.172Z"
     }
   ]
 }
