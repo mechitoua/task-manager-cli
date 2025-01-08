@@ -1,4 +1,4 @@
-import { getTasks } from '../utils.ts'
+import { getTasks, validateTaskDescription } from '../utils.ts'
 
 export async function updateTask(taskId: number, description: string): Promise<void> {
 try {

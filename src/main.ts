@@ -5,14 +5,6 @@ import { listTasks } from './services/listTasks.ts'
 import { updateTask } from './services/updateTask.ts'
 import { TaskStatus } from './utils.ts'
 
-function isValidTaskStatus(
-  status: string | undefined | null
-): status is TaskStatus | null {
-if (status === undefined || status === null) return true
-return status === TaskStatus.DONE || 
-    status === TaskStatus.TODO || 
-    status === TaskStatus.IN_PROGRESS
-}
 // check if 'tasks.json' exists if not create it when the app starts
 try {
   await Deno.stat('./tasks.json')
@@ -28,7 +20,7 @@ task-cli update <id> "new description"
 task-cli delete <id>
 task-cli mark-in-progress <id>
 task-cli mark-done <id>
-task-cli list                     # list all tasks
+task-cli list
 task-cli list <done|todo|in-progress>
 `)
 }
@@ -84,29 +76,29 @@ try {
       break
     }
     case 'list': {
-    const statusArg = args[1]
-    let status: TaskStatus | null = null
-    
-    if (statusArg) {
+      const statusArg = args[1]
+      let status: TaskStatus | null = null
+
+      if (statusArg) {
         switch (statusArg) {
-        case 'done':
+          case 'done':
             status = TaskStatus.DONE
             break
-        case 'todo':
+          case 'todo':
             status = TaskStatus.TODO
             break
-        case 'in-progress':
+          case 'in-progress':
             status = TaskStatus.IN_PROGRESS
             break
-        default:
+          default:
             throw new Error(
-            'Invalid status. Use: done, todo, in-progress, or omit for all tasks'
+              'Invalid status. Use: done, todo, in-progress, or omit for all tasks'
             )
         }
-    }
-    
-    await listTasks(status)
-    break
+      }
+
+      await listTasks(status)
+      break
     }
     default: {
       printUsage()
