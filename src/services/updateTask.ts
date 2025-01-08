@@ -1,22 +1,29 @@
-import { generateTaskFromInput, getTasks, promptUser } from '../utils.ts';
+import { getTasks } from '../utils.ts'
 
-export async function updateTask() {
-  const tasks = await getTasks();
-  if (Array.isArray(tasks)) {
-    const taskId = await promptUser('Enter the id of the task to update: ');
-    if (taskId === null) {
-      console.error('Task ID cannot be null');
-      return;
+export async function updateTask(taskId: number, description: string): Promise<void> {
+  try {
+    const tasks = await getTasks()
+    if (!Array.isArray(tasks)) {
+      throw new Error('Failed to load tasks')
     }
-    const index = tasks.findIndex((task) => task.id === parseInt(taskId));
-    if (index !== -1) {
-      const updatedTask = await generateTaskFromInput();
-      updatedTask.id = parseInt(taskId);
-      tasks[index] = updatedTask;
-      await Deno.writeTextFile('./tasks.json', JSON.stringify({ tasks }));
-      console.log('Task updated successfully');
-    } else {
-      console.log('Task with the specified id not found');
+
+    const index = tasks.findIndex((task) => task.id === taskId)
+    if (index === -1) {
+      throw new Error(`Task with ID ${taskId} not found`)
     }
+
+    // Preserve existing status and update only description and timestamp
+    const existingTask = tasks[index]
+    tasks[index] = {
+      ...existingTask,
+      description,
+      updatedAt: new Date().toISOString()
+    }
+
+    await Deno.writeTextFile('./tasks.json', JSON.stringify({ tasks }, null, 2))
+    console.log('Task updated successfully')
+  } catch (error) {
+    console.error(`Failed to update task: ${(error as Error).message}`)
+    throw error
   }
 }

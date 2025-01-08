@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Display usage if no arguments provided
+if [ $# -eq 0 ]; then
+echo "Task Manager CLI"
+echo ""
+echo "Usage:"
+echo "  task-cli list                     - List all tasks"
+echo "  task-cli list [done|todo|in-progress] - List tasks by status"
+echo "  task-cli add \"task description\"     - Add a new task"
+echo "  task-cli update <id> \"description\" - Update a task"
+echo "  task-cli delete <id>              - Delete a task"
+echo "  task-cli mark-done <id>           - Mark task as done"
+echo "  task-cli mark-in-progress <id>    - Mark task as in progress"
+exit 1
+fi
+
+# Run the Deno command with all arguments
+deno run --allow-read --allow-write src/main.ts "$@"
+
+# Check if the command was successful
+if [ $? -ne 0 ]; then
+echo "Error: Command failed"
+exit 1
+fi
+

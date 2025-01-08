@@ -1,99 +1,83 @@
 export interface Task {
-  id: number;
-  description: string;
-  status: TaskStatus;
-  createdAt: string;
-  updatedAt: string;
+  id: number
+  description: string
+  status: TaskStatus
+  createdAt: string
+  updatedAt: string
+}
+
+export interface TaskUpdate {
+  description?: string
+  status?: TaskStatus
 }
 
 export enum TaskStatus {
-  IN_PROGRESS = 'in progress',
+  IN_PROGRESS = 'in-progress',
   DONE = 'done',
-  TODO = 'todo',
+  TODO = 'todo'
 }
 
-export async function readFile(fileName: string) {
+export async function readFile(fileName: string): Promise<string> {
   try {
-    const data = await Deno.readTextFile(fileName);
-    return data;
-  } catch {
-    console.log('No file found at ./tasks.json');
+    const data = await Deno.readTextFile(fileName)
+    return data
+  } catch (error) {
+    if (error instanceof Deno.errors.NotFound) {
+      throw new Error(`File not found: ${fileName}`)
+    }
+    throw new Error(`Failed to read file: ${(error as Error).message}`)
   }
 }
 
-export async function getTasks() {
-  const data = await readFile('./tasks.json');
-  if (data === undefined) {
-    throw new Error('Failed to read tasks.json');
+export async function getTasks(): Promise<Task[]> {
+  try {
+    const data = await readFile('./tasks.json')
+    const parsed = JSON.parse(data)
+    if (!Array.isArray(parsed.tasks)) {
+      throw new Error('Invalid tasks.json format: tasks must be an array')
+    }
+    return parsed.tasks
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      throw new Error('Invalid JSON format in tasks.json')
+    }
+    throw error
   }
-  // extract each task and push it to an array
-  const tasks: Task[] = JSON.parse(data).tasks;
-  return tasks;
 }
 
-export async function generateTaskFromInput(): Promise<Task> {
-  const description = await getTaskDescriptionFromUser();
-  const status = await getTaskStatusFromUser();
-  const createdAt = new Date().toLocaleString();
-  const updatedAt = new Date().toLocaleString();
-  // make sure the id of the task start from one
-  return { id: 1, description, status, createdAt, updatedAt };
+export function isValidTaskStatus(status: string): status is TaskStatus {
+  return Object.values(TaskStatus).includes(status as TaskStatus)
 }
 
-export async function readInput(): Promise<number | null> {
-  const buf = new Uint8Array(1024);
-  const n = await Deno.stdin.read(buf);
-  if (n === null) return null; // Handle end of input
-
-  const input = new TextDecoder().decode(buf.subarray(0, n)).trim();
-  const choice = parseInt(input);
-  return isNaN(choice) ? null : choice;
-}
-
-export function displayMenu() {
-  console.log(`
---------------------Task Manager CLI -------------------
-1. List all tasks
-2. Add a task
-3. Update a task
-4. Delete a task
-5. Mark a task as 'in progress' or 'done'
-6. Exit
----------------------------------------------------------
-Choose a Task to perform (number):
-  `);
-}
-
-export async function getTaskDescriptionFromUser(): Promise<string> {
-  const desc = await promptUser('Enter task description: ');
-  if (!desc) {
-    throw new Error('Task description cannot be empty');
+export function validateTaskId(id: unknown): number {
+  if (typeof id !== 'number' || isNaN(id) || id < 1) {
+    throw new Error('Task ID must be a positive number')
   }
-  return desc;
+  return id
 }
 
-export async function getTaskStatusFromUser(): Promise<TaskStatus> {
-  const status = await promptUser(
-    'Enter task status (todo/in progress/done): '
-  );
-  if (status === null) {
-    throw new Error('Task status cannot be null');
+export function validateTaskDescription(description: unknown): string {
+  if (typeof description !== 'string' || description.trim().length === 0) {
+    throw new Error('Task description must be a non-empty string')
   }
-  const validStatus = Object.values(TaskStatus).find((s) => s === status);
-  if (!validStatus) {
-    throw new Error(
-      'Invalid task status, must be one of: ' +
-        Object.values(TaskStatus).join(', ')
-    );
-  }
-  return validStatus as TaskStatus;
+  return description.trim()
 }
 
-export async function promptUser(prompt: string): Promise<string | null> {
-  const buf = new Uint8Array(1024);
-  console.log(prompt);
-  const n = await Deno.stdin.read(buf);
-  if (n === null) return null; // Handle end of input
-  const input = new TextDecoder().decode(buf.subarray(0, n)).trim();
-  return input;
+export function createTask(description: string, id: number): Task {
+  const now = new Date()
+  return {
+    id,
+    description: validateTaskDescription(description),
+    status: TaskStatus.TODO,
+    createdAt: now.toISOString(),
+    updatedAt: now.toISOString()
+  }
+}
+
+export async function writeFile(fileName: string, data: string): Promise<void> {
+  try {
+    await Deno.writeTextFile(fileName, data)
+  } catch (error) {
+    throw new Error(`Failed to write to file: ${(error as Error).message}`)
+  }
 }
