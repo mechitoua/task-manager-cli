@@ -1,10 +1,13 @@
 ![](./public/task-manager.png)
 
 # CLI Task Manager
+
 A command-line task management tool that helps you organize and track your tasks. It provides straightforward commands for adding, removing, updating, and listing tasks, with support for different task statuses. All tasks are automatically saved to a JSON file for data persistence.
 
 ## Link to Challenge
+
 [roadmap.sh challenge](https://roadmap.sh/projects/task-tracker)
+
 ## Features
 
 - Create new tasks with descriptions (automatically set to "todo" status)
@@ -22,7 +25,7 @@ A command-line task management tool that helps you organize and track your tasks
 
 ## Installation
 
-1. Make sure you have [Deno](https://deno.land/) installed
+1. Make sure you have [Deno](https://deno.com/) installed
 2. Install the CLI globally using:
 
 ```bash
@@ -45,7 +48,7 @@ task-cli add "Task description"
 
 ```bash
 task-cli list
-task-cli list --status=in-progress
+task-cli list <done|todo|in-progress>
 ```
 
 ### Update a task
